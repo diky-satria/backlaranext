@@ -16,6 +16,7 @@ class AuthController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
+            'division_id' => 'required',
             'password' => 'required|min:6',
             'password_confirmation' => 'required|same:password'
         ],[
@@ -23,6 +24,7 @@ class AuthController extends Controller
             'email.required' => 'Email is required',
             'email.email' => 'Email is invalid',
             'email.unique' => 'Email is registered',
+            'division_id.required' => 'Division is required',
             'password.required' => 'Password is required',
             'password.min' => 'Password min 6 characters',
             'password_confirmation.required' => 'Password confirmation is required',
@@ -30,7 +32,7 @@ class AuthController extends Controller
         ]);
 
         User::create([
-            'division_id' => 1,
+            'division_id' => $request->input('division_id'),
             'name' => ucwords($request->input('name')),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
@@ -54,7 +56,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->input('email'))->first();
         if(!Hash::check($request->input('password'), $user->password)) {
-            return response()->json(['message' => 'Password is wrong'], 422);
+            return response()->json(['password' => ['Password is wrong']], 422);
         }
 
         // HANDLE JWT

@@ -76,6 +76,10 @@ $app->configure('app');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]); // ----------------------------------------------------------------- HANDLE CORS
+
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
 ]);
@@ -95,6 +99,7 @@ $app->routeMiddleware([
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(App\Providers\CatchAllOptionsRequestsProvider::class); // ----------------------------- HANDLE CORS 
 
 /*
 |--------------------------------------------------------------------------

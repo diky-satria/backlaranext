@@ -22,6 +22,8 @@ $router->group(['prefix' => 'api'], function ($router) {
     $router->post('/auth/login', 'Auth\AuthController@login');
 
     $router->group(['middleware' => 'auth'], function ($router) {
+        $router->get('/division', 'Division\DivisionController@index');
+
         $router->get('/user', 'User\UserController@index');
         $router->get('/user/{id}', 'User\UserController@show');
         $router->post('/user', 'User\UserController@store');

@@ -16,7 +16,7 @@ class UserController extends Controller
         $limit = $request->query('limit') ? $request->query('limit') : 10;
         $search = $request->query('search') ? $request->query('search') : '';
 
-        $search_db = $search ? DB::select("WHERE u.name LIKE '".$search."' OR u.email LIKE '".$search."' OR d.name LIKE '".$search."'") : "";
+        $search_db = $search ? "WHERE u.name LIKE '%".$search."%' OR u.email LIKE '%".$search."%' OR d.name LIKE '%".$search."%'" : "";
         
         $offset = $page * $limit;
 
